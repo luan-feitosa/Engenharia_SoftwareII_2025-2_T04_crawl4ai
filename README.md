@@ -51,28 +51,33 @@ Além disso, o notebook compara os resultados obtidos em cada passo e gera um re
 
 ---
 
-## 💻 Como Executar
+💻 Infraestrutura de Análise
 
-1. Abra o link acima no **Colab**.
-2. (Opcional) Monte seu **Google Drive**:
-    ```python
-    from google.colab import drive
-    drive.mount('/content/drive')
-    ```
-3. Instale as dependências executando a célula inicial do notebook:
-    ```bash
-    !pip install openai huggingface_hub sentence-transformers scikit-learn numpy
-    !pip install radon
-    ```
-4. Coloque sua chave de API do Hugging Face na celula 2:
-    ```python
-    if HF_API_KEY == "SUA_API_KEY_AQUI":
-    ```
-5. Execute todas as células em sequência.
-6. O notebook irá:
-    - Clonar o repositório a ser analisado;
-    - Aplicar LLMs da Hugging Face para detectar padrões arquiteturais;
-    - Gerar um relatório final .md.
+Toda a metodologia de pipeline e a execução dos três modelos de linguagem foram realizadas na plataforma Google Colab. Utilizamos o ambiente de execução gratuito, que fornece acesso a GPUs NVIDIA T4 (ou similares, dependendo da disponibilidade no momento da execução). Esta infraestrutura foi suficiente para carregar e executar todos os modelos de análise (Llama 3.1 8B, DeepSeek V3.2 Exp e Qwen 2.5 7B), permitindo que todo o pipeline de 6 etapas fosse concluído para cada modelo.
+
+---
+
+## 💻 Como Executar (Metodologia de Comparação)
+
+1.  Abra o link do Google Colab.
+2.  Instale as dependências (primeira célula `!pip install...`).
+3.  Coloque sua chave de API do Hugging Face na Célula 2.
+
+**Para comparar os 3 Modelos:**
+
+O notebook deve ser executado **três vezes**, uma para cada modelo.
+
+4.  Na **Célula 2**, localize a variável `MODELO_HF`.
+5.  Escolha um dos três modelos que analisamos:
+    * `MODELO_HF = "meta-llama/Llama-3.1-8B-Instruct"`
+    * `MODELO_HF = "deepseek-ai/DeepSeek-V3.2-Exp"`
+    * `MODELO_HF = "Qwen/Qwen2.5-7B-Instruct"`
+6.  Execute todas as células em sequência (no menu, "Ambiente de execução" > "Executar tudo").
+7.  Salve o relatório final gerado.
+8.  Repita os passos 5 a 7 para os outros dois modelos.
+
+**Justificativa dos Modelos:**
+[cite_start]Selecionamos estes três modelos (Llama 3.1, DeepSeek V3.2, e Qwen 2.5) [cite: 634-636] por serem modelos de chat (Instruct) de tamanho similar (aprox. 7-8B de parâmetros) e de alta performance, permitindo uma comparação justa sobre como diferentes arquiteturas de LLM interpretam e analisam o código-fonte.
 
 OBS: lembre de baixar o arquivo final e/ou salva-lo com um nome diferente pois quando rodar novamente com outra LLM o arquivo.md sera sobrescrito.
 
